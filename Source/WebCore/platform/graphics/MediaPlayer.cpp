@@ -114,6 +114,10 @@
 #define PlatformMediaEngineClassName MediaPlayerPrivate
 #endif
 
+#if PLATFORM(APLUS)
+#include "MediaPlayerPrivateAplus.h"
+#endif
+
 #if USE(EXTERNAL_HOLEPUNCH)
 #include "MediaPlayerPrivateHolePunch.h"
 #endif
@@ -355,6 +359,10 @@ static void buildMediaEnginesVector() WTF_REQUIRES_LOCK(mediaEngineVectorLock)
 
 #if PLATFORM(HAIKU)
     MediaPlayerPrivate::registerMediaEngine(addMediaEngine);
+#endif
+
+#if PLATFORM(APLUS)
+    MediaPlayerPrivateAplus::registerMediaEngine(addMediaEngine);
 #endif
 
 #if USE(MEDIA_FOUNDATION)

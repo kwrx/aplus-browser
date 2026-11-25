@@ -96,6 +96,18 @@ String formatLocalizedString(const char* format, ...)
     va_end(arguments);
 
     return String::fromUTF8(formatted.String());
+#elif PLATFORM(APLUS)
+    va_list arguments;
+    va_start(arguments, format);
+    char* result = nullptr;
+    int length = vasprintf(&result, format, arguments);
+    va_end(arguments);
+    if (length < 0 || !result) {
+        return String::fromUTF8(format);
+    }
+    String string = String::fromUTF8(std::span<const char>(result, length));
+    free(result);
+    return string;
 #else
     notImplemented();
     return String::fromUTF8(format);

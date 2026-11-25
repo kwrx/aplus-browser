@@ -91,6 +91,7 @@ enum class MediaPlayerMediaEngineIdentifier : uint8_t {
     GStreamer,
     GStreamerMSE,
     Haiku,
+    Aplus,
     HolePunch,
     MediaFoundation,
     MockMSE,

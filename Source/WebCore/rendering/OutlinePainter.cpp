@@ -244,7 +244,7 @@ void OutlinePainter::paintOutlineWithLineRects(const RenderInline& renderer, con
 
 static bool NODELETE usePlatformFocusRingColorForOutlineStyleAuto()
 {
-#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     return true;
 #else
     return false;
@@ -253,7 +253,7 @@ static bool NODELETE usePlatformFocusRingColorForOutlineStyleAuto()
 
 static bool NODELETE useShrinkWrappedFocusRingForOutlineStyleAuto()
 {
-#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     return true;
 #else
     return false;

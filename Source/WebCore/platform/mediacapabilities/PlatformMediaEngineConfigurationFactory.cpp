@@ -46,6 +46,10 @@
 #include "PlatformMediaEngineConfigurationFactoryGStreamer.h"
 #endif
 
+#if PLATFORM(APLUS) && ENABLE(VIDEO)
+#include "PlatformMediaEngineConfigurationFactoryAplus.h"
+#endif
+
 namespace WebCore {
 
 static bool& NODELETE mockEnabled()
@@ -63,6 +67,9 @@ static MediaEngineFactoryVector defaultFactories()
 #endif
 #if USE(GSTREAMER)
     factories.append({ &createMediaPlayerDecodingConfigurationGStreamer, &createMediaPlayerEncodingConfigurationGStreamer });
+#endif
+#if PLATFORM(APLUS) && ENABLE(VIDEO)
+    factories.append({ &createMediaPlayerDecodingConfigurationAplus, nullptr });
 #endif
     return factories;
 }

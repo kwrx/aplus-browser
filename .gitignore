@@ -1,0 +1,7 @@
+build-aplus/
+sdk-cairo/
+__build/
+__sdk/
+__cairo/
+__pycache__/
+*.pyc

@@ -110,6 +110,8 @@ String NavigatorBase::platform() const
     return "Win32"_s;
 #elif OS(HAIKU)
     return "Haiku"_s;
+#elif OS(APLUS)
+    return "Linux x86_64"_s;
 #else
     return ""_s;
 #endif

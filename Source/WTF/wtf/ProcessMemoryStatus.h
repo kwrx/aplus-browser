@@ -25,7 +25,7 @@
 
 #pragma once
 
-#if OS(LINUX) || OS(HAIKU)
+#if OS(LINUX) || OS(HAIKU) || OS(APLUS)
 
 #include <wtf/ForbidHeapAllocation.h>
 

@@ -34,7 +34,7 @@
 #include "FontCascade.h"
 #include <wtf/NeverDestroyed.h>
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 #include "SystemSettings.h"
 #endif
 
@@ -49,7 +49,7 @@ Theme& Theme::singleton()
 
 ThemeAdwaita::ThemeAdwaita()
 {
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     refreshSettings();
 
     // Note that Theme is NeverDestroy'd so the destructor will never be called to disconnect this.
@@ -57,10 +57,10 @@ ThemeAdwaita::ThemeAdwaita()
         if (state.enableAnimations || state.themeName)
             this->refreshSettings();
     }, this);
-#endif // PLATFORM(GTK) || PLATFORM(WPE)
+#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 }
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 
 void ThemeAdwaita::refreshSettings()
 {
@@ -76,7 +76,7 @@ void ThemeAdwaita::refreshSettings()
 #endif // PLATFORM(GTK) && !USE(GTK4)
 }
 
-#endif // PLATFORM(GTK) || PLATFORM(WPE)
+#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 
 void ThemeAdwaita::setAccentColor(const Color& color)
 {

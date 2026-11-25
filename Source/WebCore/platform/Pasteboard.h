@@ -102,7 +102,7 @@ struct PasteboardWebContent {
     HashMap<WebCore::FrameIdentifier, Ref<WebCore::LegacyWebArchive>> localFrameArchives;
     Vector<WebCore::FrameIdentifier> remoteFrameIdentifiers;
 #endif
-#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU) || PLATFORM(APLUS)
     String contentOrigin;
     bool canSmartCopyOrDelete;
     String text;
@@ -119,7 +119,7 @@ struct PasteboardURL {
 #if PLATFORM(MAC)
     String userVisibleForm;
 #endif
-#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU) || PLATFORM(APLUS)
     String markup;
 #endif
 };
@@ -156,7 +156,7 @@ class PasteboardWebContentReader {
 public:
     virtual ~PasteboardWebContentReader() = default;
 
-#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(COCOA) || PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     virtual bool readFilePath(const String&, PresentationSize preferredPresentationSize = { }, const String& contentType = { }) = 0;
     virtual bool readFilePaths(const Vector<String>&) = 0;
     virtual bool readHTML(const String&) = 0;

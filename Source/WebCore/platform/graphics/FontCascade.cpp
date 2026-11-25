@@ -380,7 +380,7 @@ float FontCascade::width(CodePath codePathToUse, const TextRun& run, SingleThrea
 
 NEVER_INLINE float FontCascade::widthForSimpleTextSlow(StringView text, TextDirection textDirection, GlyphGeometryCacheEntry* cacheEntry) const
 {
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     TextRun run { text, 0, 0, ExpansionBehavior::defaultBehavior(), textDirection, false, false };
     float result = width(CodePath::Simple, run);
 #else
@@ -683,7 +683,7 @@ bool FontCascade::canHandleRunAsSimpleText(const TextRun& run, unsigned from, un
 #endif
 }
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 bool FontCascade::shouldUseComplexTextControllerForSimpleText() const
 {
     // For ports that doesn't implement Font::applyTransforms, we can only use WidthIterator when we know for sure

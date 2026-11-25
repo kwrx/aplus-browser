@@ -26,7 +26,7 @@
 #include "config.h"
 #include "WebContentReader.h"
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 #include "Blob.h"
 #include "BlobURL.h"
 #include "DOMURL.h"

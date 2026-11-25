@@ -35,6 +35,10 @@ namespace WTF {
 class TextStream;
 }
 
+#if PLATFORM(APLUS)
+struct AplusScrollEvent;
+#endif
+
 namespace WebCore {
 
 class PlatformGestureEvent;
@@ -182,6 +186,10 @@ public:
 
 #if PLATFORM(WIN)
     WEBCORE_EXPORT PlatformWheelEvent(HWND, WPARAM, LPARAM, bool isMouseHWheel);
+#endif
+
+#if PLATFORM(APLUS)
+    WEBCORE_EXPORT explicit PlatformWheelEvent(const AplusScrollEvent&);
 #endif
 
 protected:

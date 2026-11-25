@@ -1,0 +1,151 @@
+/*
+    Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
+    Copyright (C) 2008 Trolltech ASA
+    Copyright (C) 2008 Collabora Ltd. All rights reserved.
+    Copyright (C) 2008 INdT - Instituto Nokia de Tecnologia
+    Copyright (C) 2009-2010 ProFUSION embedded systems
+    Copyright (C) 2009-2011 Samsung Electronics
+    Copyright (C) 2012 Intel Corporation
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Library General Public
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Library General Public License for more details.
+
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA 02110-1301, USA.
+*/
+
+#include "config.h"
+#include "PlatformStrategiesAplus.h"
+
+#include "WebCore/AudioDestination.h"
+#include "WebCore/BlobRegistryImpl.h"
+#include "WebCore/MediaStrategy.h"
+#include "WebCore/NetworkStorageSession.h"
+#include "WebCore/NotImplemented.h"
+#include "WebCore/Page.h"
+#include "WebCore/PageGroup.h"
+
+#include "wtf/NeverDestroyed.h"
+#include "WebResourceLoadScheduler.h"
+
+
+using namespace WebCore;
+
+
+void PlatformStrategiesAplus::initialize()
+{
+    static NeverDestroyed<PlatformStrategiesAplus> platformStrategies;
+    setPlatformStrategies(&platformStrategies.get());
+}
+
+PlatformStrategiesAplus::PlatformStrategiesAplus()
+{
+}
+
+LoaderStrategy* PlatformStrategiesAplus::createLoaderStrategy()
+{
+    return new WebResourceLoadScheduler();
+}
+
+PasteboardStrategy* PlatformStrategiesAplus::createPasteboardStrategy()
+{
+    notImplemented();
+    return 0;
+}
+
+class WebBlobRegistry final : public BlobRegistry {
+private:
+    void registerInternalFileBlobURL(const URL& url, Ref<BlobDataFileReference>&& reference, const String& contentType, const String&) final override
+    {
+        m_blobRegistry.registerInternalFileBlobURL(url, std::move(reference), contentType);
+    }
+    void registerInternalBlobURL(const URL& url, Vector<BlobPart>&& parts, const String& contentType) final override
+    {
+        m_blobRegistry.registerInternalBlobURL(url, std::move(parts), contentType);
+    }
+    void registerBlobURL(const URL& url, const URL& srcURL, const PolicyContainer& container, const std::optional<SecurityOriginData>& topOrigin) final override
+    {
+        m_blobRegistry.registerBlobURL(url, srcURL, container, topOrigin);
+    }
+    void registerInternalBlobURLOptionallyFileBacked(const URL& url, const URL& srcURL, RefPtr<BlobDataFileReference>&& reference, const String& contentType) final override
+    {
+        m_blobRegistry.registerInternalBlobURLOptionallyFileBacked(url, srcURL, std::move(reference), contentType, { });
+    }
+    void registerInternalBlobURLForSlice(const URL& url, const URL& srcURL, long long start, long long end, const String& contentType) final override
+    {
+        m_blobRegistry.registerInternalBlobURLForSlice(url, srcURL, start, end, contentType);
+    }
+    void unregisterBlobURL(const URL& url, const std::optional<SecurityOriginData>& topOrigin) final override
+    {
+        m_blobRegistry.unregisterBlobURL(url, topOrigin);
+    }
+    void registerBlobURLHandle(const URL& url, const std::optional<SecurityOriginData>& topOrigin) final override
+    {
+        m_blobRegistry.registerBlobURLHandle(url, topOrigin);
+    }
+    void unregisterBlobURLHandle(const URL& url, const std::optional<SecurityOriginData>& topOrigin) final override
+    {
+        m_blobRegistry.unregisterBlobURLHandle(url, topOrigin);
+    }
+    unsigned long long blobSize(const URL& url) final override
+    {
+        return m_blobRegistry.blobSize(url);
+    }
+    String blobType(const URL& url) final override
+    {
+        return m_blobRegistry.blobType(url);
+    }
+    void writeBlobsToTemporaryFilesForIndexedDB(const Vector<String>& blobURLs, CompletionHandler<void(Vector<String>&& filePaths)>&& completionHandler) final override
+    {
+        m_blobRegistry.writeBlobsToTemporaryFilesForIndexedDB(blobURLs, std::move(completionHandler));
+    }
+
+    BlobRegistryImpl* blobRegistryImpl() final { return &m_blobRegistry; }
+
+    BlobRegistryImpl m_blobRegistry;
+};
+
+WebCore::BlobRegistry* PlatformStrategiesAplus::createBlobRegistry()
+{
+    return new WebBlobRegistry;
+}
+
+
+bool PlatformStrategiesAplus::cookiesEnabled(const NetworkStorageSession& session)
+{
+	return true;
+}
+
+
+bool PlatformStrategiesAplus::getRawCookies(const NetworkStorageSession& session, const URL& firstParty, const WebCore::SameSiteInfo& sameSite, const URL& url,
+	std::optional<FrameIdentifier> frameID, std::optional<PageIdentifier> pageID,
+	Vector<Cookie>& rawCookies)
+{
+    return session.getRawCookies(firstParty, sameSite, url, frameID, pageID, ApplyTrackingPrevention::No, ShouldRelaxThirdPartyCookieBlocking::Yes, rawCookies);
+}
+
+
+class WebMediaStrategy final : public MediaStrategy {
+private:
+#if ENABLE(WEB_AUDIO)
+    Ref<AudioDestination> createAudioDestination(const AudioDestinationCreationOptions& options) override
+    {
+        return AudioDestination::create(options);
+    }
+#endif
+};
+
+MediaStrategy* PlatformStrategiesAplus::createMediaStrategy()
+{
+    return new WebMediaStrategy;
+}
+

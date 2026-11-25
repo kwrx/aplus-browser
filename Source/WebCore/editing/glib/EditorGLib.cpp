@@ -27,7 +27,7 @@
 #include "config.h"
 #include "Editor.h"
 
-#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU) || PLATFORM(APLUS)
 #include "CachedImage.h"
 #include "ContainerNodeInlines.h"
 #include "DocumentFragment.h"
@@ -134,4 +134,4 @@ RefPtr<DocumentFragment> Editor::webContentFromPasteboard(Pasteboard& pasteboard
 
 } // namespace WebCore
 
-#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU)
+#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(HAIKU) || PLATFORM(APLUS)

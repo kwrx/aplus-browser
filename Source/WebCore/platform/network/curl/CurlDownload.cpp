@@ -74,7 +74,7 @@ bool CurlDownload::cancel()
 {
     m_isCancelled = true;
 
-    if (!m_curlRequest)
+    if (m_curlRequest)
         m_curlRequest->cancel();
 
     return true;
@@ -208,9 +208,13 @@ void CurlDownload::willSendRequest()
         newRequest.clearHTTPOrigin();
     }
 
+    String downloadPath = m_curlRequest->getDownloadedFilePath();
+    m_curlRequest->setDownloadedFilePath(String());
     m_curlRequest->cancel();
 
     m_curlRequest = createCurlRequest(newRequest);
+    m_curlRequest->enableDownloadToFile();
+    m_curlRequest->setDownloadedFilePath(downloadPath);
     m_curlRequest->start();
 }
 

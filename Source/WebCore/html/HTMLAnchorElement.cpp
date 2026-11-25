@@ -110,7 +110,7 @@ bool HTMLAnchorElement::supportsFocus() const
 
 bool HTMLAnchorElement::isMouseFocusable() const
 {
-#if !(PLATFORM(GTK) || PLATFORM(WPE))
+#if !(PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS))
     // Only allow links with tabIndex or contentEditable to be mouse focusable.
     if (isLink() && !protect(document())->quirks().needsAnchorToBeMouseFocusable())
         return HTMLElement::supportsFocus();

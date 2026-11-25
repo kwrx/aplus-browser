@@ -56,12 +56,16 @@
 #include <wtf/FileSystem.h>
 #endif
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 #include "SystemSettings.h"
 #endif
 
 #if USE(GLIB)
 #include <wtf/glib/GSpanExtras.h>
+#endif
+
+#if PLATFORM(APLUS)
+#include "MediaControlsIconsAplus.h"
 #endif
 
 namespace WebCore {
@@ -237,6 +241,11 @@ RefPtr<FragmentedSharedBuffer> RenderThemeAdwaita::mediaControlsImageDataForIcon
     if (!data)
         return nullptr;
     return SharedBuffer::create(WTF::move(*data));
+#elif PLATFORM(APLUS)
+    auto data = mediaControlsIconAplus(iconName, iconType);
+    if (data.empty())
+        return nullptr;
+    return SharedBuffer::create(data);
 #else
     return nullptr;
 #endif
@@ -256,6 +265,11 @@ String RenderThemeAdwaita::mediaControlsBase64StringForIconNameAndType(const Str
     if (!data)
         return { };
     return base64EncodeToString(data->span());
+#elif PLATFORM(APLUS)
+    auto data = mediaControlsIconAplus(iconName, iconType);
+    if (data.empty())
+        return emptyString();
+    return base64EncodeToString(data);
 #else
     return { };
 #endif
@@ -468,7 +482,7 @@ Style::LineWidthBox RenderThemeAdwaita::controlBorder(StyleAppearance appearance
     return RenderTheme::controlBorder(appearance, font, zoomedBox, zoomFactor, element);
 }
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 std::optional<Seconds> RenderThemeAdwaita::caretBlinkInterval() const
 {
     auto shouldBlink = SystemSettings::singleton().cursorBlink();
@@ -477,7 +491,7 @@ std::optional<Seconds> RenderThemeAdwaita::caretBlinkInterval() const
         return { 500_us * blinkTime.value_or(1200) };
     return { };
 }
-#endif // PLATFORM(GTK) || PLATFORM(WPE)
+#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 
 void RenderThemeAdwaita::setAccentColor(const Color& color)
 {

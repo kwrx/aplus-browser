@@ -39,6 +39,10 @@
 class BMessage;
 #endif
 
+#if PLATFORM(APLUS)
+struct AplusPointerEvent;
+#endif
+
 namespace WebCore {
 
 class PlatformMouseEvent : public PlatformEvent {
@@ -97,6 +101,10 @@ public:
 
 #if PLATFORM(HAIKU)
         PlatformMouseEvent(const BMessage*);
+#endif
+
+#if PLATFORM(APLUS)
+    WEBCORE_EXPORT explicit PlatformMouseEvent(const AplusPointerEvent&);
 #endif
 
 #if PLATFORM(GTK)

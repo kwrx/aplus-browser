@@ -286,6 +286,7 @@ public:
         } else if (y->color() == Black)
             removeFixup(x, xParent);
 
+        z->reset();
         return z;
     }
     

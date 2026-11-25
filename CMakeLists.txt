@@ -81,6 +81,10 @@ if (ENABLE_TOOLS)
     add_subdirectory(Tools)
 endif ()
 
+if (PORT STREQUAL "APLUS" AND ENABLE_WEBKIT_LEGACY)
+    add_subdirectory(Tools/aplus/browser)
+endif ()
+
 if (DEVELOPER_MODE)
     if (EXISTS "${CMAKE_SOURCE_DIR}/PerformanceTests")
         add_subdirectory(PerformanceTests)

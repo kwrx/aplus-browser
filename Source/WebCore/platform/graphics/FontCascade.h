@@ -278,7 +278,7 @@ public:
     void updateEnableKerning() { m_enableKerning = computeEnableKerning(); }
     void updateRequiresShaping() { m_requiresShaping = computeRequiresShaping(); }
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     bool shouldUseComplexTextControllerForSimpleText() const;
 #endif
 
@@ -317,7 +317,7 @@ private:
             return true;
         case CodePath::Simple:
         case CodePath::SimpleWithGlyphOverflow:
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
             return shouldUseComplexTextControllerForSimpleText();
 #else
             return false;

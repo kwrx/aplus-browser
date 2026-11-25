@@ -38,7 +38,7 @@
 #include "Scrollbar.h"
 #include "ThemeAdwaita.h"
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 #include "SystemSettings.h"
 #endif
 
@@ -62,7 +62,7 @@ bool ScrollbarThemeAdwaita::usesOverlayScrollbars() const
     if (!g_strcmp0(g_getenv("GTK_OVERLAY_SCROLLING"), "0"))
         return false;
 #endif
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     return SystemSettings::singleton().overlayScrolling().value_or(true);
 #else
     return true;
@@ -178,7 +178,7 @@ ScrollbarButtonPressAction ScrollbarThemeAdwaita::handleMousePressEvent(Scrollba
     switch (pressedPart) {
     case BackTrackPart:
     case ForwardTrackPart:
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
         warpSlider = SystemSettings::singleton().primaryButtonWarpsSlider().value_or(true);
 #endif
         // The shift key or middle/right button reverses the sense.

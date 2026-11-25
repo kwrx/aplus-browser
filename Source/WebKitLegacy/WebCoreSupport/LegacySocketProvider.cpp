@@ -25,7 +25,7 @@
 
 #import "LegacySocketProvider.h"
 
-#if defined(BUILDING_WITH_CMAKE) && !OS(HAIKU)
+#if defined(BUILDING_WITH_CMAKE) && !OS(HAIKU) && !PLATFORM(APLUS)
 // WebSocketChannel.cpp (in Sources.txt, not loaded by CMake) depends on SocketStreamHandle.
 // Stub out -- WK2 NetworkProcess handles WebSockets.
 #import <WebCore/ThreadableWebSocketChannel.h>

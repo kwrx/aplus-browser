@@ -188,8 +188,10 @@ bool SQLiteDatabase::open(const String& filename, OpenMode openMode, OptionSet<O
     }
 
     if (filename != inMemoryPath()) {
+#if !OS(APLUS)
         if (openMode != OpenMode::ReadOnly && !useWALJournalMode())
             return false;
+#endif
 
         auto shmFileName = makeString(filename, "-shm"_s);
         if (FileSystem::fileExists(shmFileName) && !FileSystem::isSafeToUseMemoryMapForPath(shmFileName)) {

@@ -56,6 +56,9 @@ typedef HWND PlatformWidget;
 #elif PLATFORM(HAIKU)
 class BView;
 typedef BView* PlatformWidget;
+#elif PLATFORM(APLUS)
+class AplusBrowserHost;
+typedef AplusBrowserHost* PlatformWidget;
 #else
 typedef void* PlatformWidget;
 #endif

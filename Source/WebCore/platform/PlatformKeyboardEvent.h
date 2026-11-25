@@ -47,6 +47,10 @@ OBJC_CLASS WebEvent;
 class BMessage;
 #endif
 
+#if PLATFORM(APLUS)
+struct AplusKeyEvent;
+#endif
+
 namespace WebCore {
 
     class PlatformKeyboardEvent : public PlatformEvent {
@@ -141,6 +145,10 @@ namespace WebCore {
         static String keyIdentifierForHaikuKeyCode(char singleByte, int keyCode);
         static String KeyCodeForKeyEvent(int keyCode);
         static int windowsKeyCodeForKeyEvent(char singleByte, int keyCode);
+#endif
+
+#if PLATFORM(APLUS)
+        WEBCORE_EXPORT explicit PlatformKeyboardEvent(const AplusKeyEvent&);
 #endif
 
 #if USE(LIBWPE)

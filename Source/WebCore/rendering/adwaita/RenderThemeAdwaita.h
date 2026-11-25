@@ -99,7 +99,7 @@ public:
     Style::MinimumSizePair minimumControlSize(StyleAppearance, const FontCascade&, const Style::MinimumSizePair&, float zoomFactor) const final;
     Style::LineWidthBox controlBorder(StyleAppearance, const FontCascade&, const Style::LineWidthBox&, float, const Element*) const final;
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     std::optional<Seconds> caretBlinkInterval() const final;
 #endif
 

@@ -45,7 +45,7 @@ public:
     void setAccentColor(const Color&);
     Color accentColor();
 private:
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     void refreshSettings();
 #endif
 

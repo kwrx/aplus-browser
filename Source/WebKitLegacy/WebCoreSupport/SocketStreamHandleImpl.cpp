@@ -25,6 +25,8 @@
 
 #if PLATFORM(COCOA)
 #include "SocketStreamHandleImpl.h"
+#elif PLATFORM(APLUS)
+#include "../aplus/WebCoreSupport/SocketStreamHandleImpl.h"
 #else
 #include "../haiku/WebCoreSupport/SocketStreamHandleImpl.h"
 #endif

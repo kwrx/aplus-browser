@@ -64,6 +64,7 @@
     // IBM's own file format
 #define HIDE_SYMBOL(name) ".lglobl " #name
 #elif  OS(LINUX)               \
+    || OS(APLUS)               \
     || OS(FREEBSD)             \
     || OS(FUCHSIA)             \
     || OS(HAIKU)               \
@@ -83,6 +84,7 @@
 #if OS(DARWIN)
 #define LOCAL_LABEL_STRING(name) "L" #name
 #elif  OS(LINUX)               \
+    || OS(APLUS)               \
     || OS(FREEBSD)             \
     || OS(FUCHSIA)             \
     || OS(OPENBSD)             \

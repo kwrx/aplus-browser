@@ -802,7 +802,9 @@ void CurlRequest::writeDataToDownloadFileIfEnabled(std::span<const unsigned char
             return;
 
         if (m_downloadFilePath.isEmpty()) {
-            auto [m_downloadFilePath, m_downloadFileHandle] = FileSystem::openTemporaryFile("download"_s);
+            auto temporaryFile = FileSystem::openTemporaryFile("download"_s);
+            m_downloadFilePath = temporaryFile.first;
+            m_downloadFileHandle = WTF::move(temporaryFile.second);
         } else if (!m_downloadFileHandle) {
             m_downloadFileHandle = FileSystem::openFile(m_downloadFilePath, FileSystem::FileOpenMode::Truncate);
         }

@@ -228,7 +228,7 @@ bool HTMLFormControlElement::isKeyboardFocusable(const FocusEventData& focusEven
 
 bool HTMLFormControlElement::isMouseFocusable() const
 {
-#if (PLATFORM(GTK) || PLATFORM(WPE))
+#if (PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS))
     return HTMLElement::isMouseFocusable();
 #else
     // FIXME: We can remove needsFormControlToBeMouseFocusable if there are no more quirks

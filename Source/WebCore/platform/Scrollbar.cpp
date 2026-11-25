@@ -69,7 +69,7 @@ void Scrollbar::setShouldUseFixedPixelsPerLineStepForTesting(bool useFixedPixels
 
 int Scrollbar::pixelsPerLineStep(int viewWidthOrHeight)
 {
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
     if (!s_shouldUseFixedPixelsPerLineStepForTesting && viewWidthOrHeight > 0)
         return std::pow(viewWidthOrHeight, 2. / 3.);
 #else

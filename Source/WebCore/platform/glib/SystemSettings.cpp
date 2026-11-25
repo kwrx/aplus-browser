@@ -26,7 +26,7 @@
 #include "config.h"
 #include "SystemSettings.h"
 
-#if PLATFORM(GTK) || PLATFORM(WPE)
+#if PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
 
 namespace WebCore {
 
@@ -165,4 +165,4 @@ void SystemSettings::removeObserver(void* context)
 
 } // namespace WebCore
 
-#endif // PLATFORM(GTK) || PLATFORM(WPE)
+#endif // PLATFORM(GTK) || PLATFORM(WPE) || PLATFORM(APLUS)
